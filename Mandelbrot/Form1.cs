@@ -92,7 +92,7 @@ namespace Mandelbrot
                     for (var i = 0; i < MAX_ITERATIONS; i++)
                     {
                         var abs2 = Abs2(z_i);
-                        if (abs2 > 4)
+                        if (abs2 > (squareRadioButton.Checked ? 4 : 9))
                         {
                             array[x, y] = i;
                             break;
@@ -103,13 +103,13 @@ namespace Mandelbrot
                 backgroundWorker1.ReportProgress((int)((x + 1) * 50.0 / XSIZE));
             }
 
-            var equalizer = new EqualizedHistogram(array);
+            var equalized = EqualizedHistogram.Equalize(array);
             Bitmap bitmap = new Bitmap(XSIZE, YSIZE);
             for (var x = 0; x < XSIZE; x++)
             {
                 for (var y = 0; y < YSIZE; y++)
                 {
-                    var level = equalizer.GetLevel(array[x, y]);
+                    var level = equalized[x, y];
                     level = Math.Max(0, level);
                     level = Math.Min(255, level);
                     bitmap.SetPixel(x, y, Color.FromArgb(level, level, level));
