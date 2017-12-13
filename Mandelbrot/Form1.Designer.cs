@@ -45,6 +45,8 @@
             this.label1 = new System.Windows.Forms.Label();
             this.squareRadioButton = new System.Windows.Forms.RadioButton();
             this.cubeRadioButton = new System.Windows.Forms.RadioButton();
+            this.button2 = new System.Windows.Forms.Button();
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -63,7 +65,7 @@
             this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pictureBox1.Location = new System.Drawing.Point(0, 0);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(342, 286);
+            this.pictureBox1.Size = new System.Drawing.Size(342, 338);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
@@ -82,6 +84,7 @@
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.button2);
             this.splitContainer1.Panel1.Controls.Add(this.cubeRadioButton);
             this.splitContainer1.Panel1.Controls.Add(this.squareRadioButton);
             this.splitContainer1.Panel1.Controls.Add(this.progressBar1);
@@ -100,7 +103,7 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.pictureBox1);
-            this.splitContainer1.Size = new System.Drawing.Size(526, 286);
+            this.splitContainer1.Size = new System.Drawing.Size(526, 338);
             this.splitContainer1.SplitterDistance = 180;
             this.splitContainer1.TabIndex = 1;
             // 
@@ -346,11 +349,25 @@
             this.cubeRadioButton.Text = "Cube";
             this.cubeRadioButton.UseVisualStyleBackColor = true;
             // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(12, 280);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(159, 44);
+            this.button2.TabIndex = 15;
+            this.button2.Text = "Save";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // saveFileDialog1
+            // 
+            this.saveFileDialog1.DefaultExt = "bmp";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(526, 286);
+            this.ClientSize = new System.Drawing.Size(526, 338);
             this.Controls.Add(this.splitContainer1);
             this.Name = "Form1";
             this.Text = "Mandelbrot";
@@ -389,6 +406,8 @@
         private System.Windows.Forms.ProgressBar progressBar1;
         private System.Windows.Forms.RadioButton cubeRadioButton;
         private System.Windows.Forms.RadioButton squareRadioButton;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
     }
 }
 

@@ -129,5 +129,13 @@ namespace Mandelbrot
         {
             progressBar1.Value = e.ProgressPercentage;
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                pictureBox1.Image.Save(saveFileDialog1.FileName);
+            }
+        }
     }
 }
