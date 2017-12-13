@@ -31,6 +31,7 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.label4 = new System.Windows.Forms.Label();
             this.iterations = new System.Windows.Forms.NumericUpDown();
             this.label3 = new System.Windows.Forms.Label();
@@ -42,7 +43,8 @@
             this.realMax = new System.Windows.Forms.NumericUpDown();
             this.realMin = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
-            this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.squareRadioButton = new System.Windows.Forms.RadioButton();
+            this.cubeRadioButton = new System.Windows.Forms.RadioButton();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -80,6 +82,8 @@
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.cubeRadioButton);
+            this.splitContainer1.Panel1.Controls.Add(this.squareRadioButton);
             this.splitContainer1.Panel1.Controls.Add(this.progressBar1);
             this.splitContainer1.Panel1.Controls.Add(this.label4);
             this.splitContainer1.Panel1.Controls.Add(this.iterations);
@@ -99,6 +103,13 @@
             this.splitContainer1.Size = new System.Drawing.Size(526, 286);
             this.splitContainer1.SplitterDistance = 180;
             this.splitContainer1.TabIndex = 1;
+            // 
+            // progressBar1
+            // 
+            this.progressBar1.Location = new System.Drawing.Point(14, 197);
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Size = new System.Drawing.Size(156, 29);
+            this.progressBar1.TabIndex = 12;
             // 
             // label4
             // 
@@ -312,12 +323,28 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Real";
             // 
-            // progressBar1
+            // squareRadioButton
             // 
-            this.progressBar1.Location = new System.Drawing.Point(14, 186);
-            this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(156, 29);
-            this.progressBar1.TabIndex = 12;
+            this.squareRadioButton.AutoSize = true;
+            this.squareRadioButton.Location = new System.Drawing.Point(18, 174);
+            this.squareRadioButton.Name = "squareRadioButton";
+            this.squareRadioButton.Size = new System.Drawing.Size(59, 17);
+            this.squareRadioButton.TabIndex = 13;
+            this.squareRadioButton.TabStop = true;
+            this.squareRadioButton.Text = "Square";
+            this.squareRadioButton.UseVisualStyleBackColor = true;
+            // 
+            // cubeRadioButton
+            // 
+            this.cubeRadioButton.AutoSize = true;
+            this.cubeRadioButton.Checked = true;
+            this.cubeRadioButton.Location = new System.Drawing.Point(111, 174);
+            this.cubeRadioButton.Name = "cubeRadioButton";
+            this.cubeRadioButton.Size = new System.Drawing.Size(50, 17);
+            this.cubeRadioButton.TabIndex = 14;
+            this.cubeRadioButton.TabStop = true;
+            this.cubeRadioButton.Text = "Cube";
+            this.cubeRadioButton.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
@@ -326,7 +353,7 @@
             this.ClientSize = new System.Drawing.Size(526, 286);
             this.Controls.Add(this.splitContainer1);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "Mandelbrot";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel1.PerformLayout();
@@ -360,6 +387,8 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.NumericUpDown iterations;
         private System.Windows.Forms.ProgressBar progressBar1;
+        private System.Windows.Forms.RadioButton cubeRadioButton;
+        private System.Windows.Forms.RadioButton squareRadioButton;
     }
 }
 

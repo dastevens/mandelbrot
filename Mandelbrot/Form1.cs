@@ -47,6 +47,15 @@ namespace Mandelbrot
             };
         }
 
+        Complex Cube(Complex a)
+        {
+            return new Complex
+            {
+                Real = a.Real * a.Real * a.Real - 3 * a.Real * a.Imag * a.Imag,
+                Imag = 3 * a.Real * a.Real * a.Imag - a.Imag * a.Imag * a.Imag
+            };
+        }
+
         Complex Add(Complex a, Complex b)
         {
             return new Complex
@@ -88,7 +97,7 @@ namespace Mandelbrot
                             array[x, y] = i;
                             break;
                         }
-                        z_i = Add(Square(z_i), c);
+                        z_i = Add(squareRadioButton.Checked ? Square(z_i) : Cube(z_i), c);
                     }
                 }
                 backgroundWorker1.ReportProgress((int)((x + 1) * 50.0 / XSIZE));
