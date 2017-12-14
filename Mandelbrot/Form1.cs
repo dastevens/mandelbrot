@@ -17,106 +17,16 @@ namespace Mandelbrot
             InitializeComponent();
         }
 
-        class Complex
-        {
-            public float Imag;
-            public float Real;
-        }
-
-        class Limits
-        {
-            public Complex Min;
-            public Complex Max;
-        }
-
-        Complex Map(int x, int xSize, int y, int ySize, Limits limits)
-        {
-            return new Complex
-            {
-                Real = limits.Min.Real + ((float)x / (float)xSize) * (limits.Max.Real - limits.Min.Real),
-                Imag = limits.Min.Imag + ((float)y / (float)ySize) * (limits.Max.Imag - limits.Min.Imag),
-            };
-        }
-
-        Complex Square(Complex a)
-        {
-            return new Complex
-            {
-                Real = a.Real * a.Real - a.Imag * a.Imag,
-                Imag = 2 * a.Real * a.Imag,
-            };
-        }
-
-        Complex Cube(Complex a)
-        {
-            return new Complex
-            {
-                Real = a.Real * a.Real * a.Real - 3 * a.Real * a.Imag * a.Imag,
-                Imag = 3 * a.Real * a.Real * a.Imag - a.Imag * a.Imag * a.Imag
-            };
-        }
-
-        Complex Add(Complex a, Complex b)
-        {
-            return new Complex
-            {
-                Real = a.Real + b.Real,
-                Imag = a.Imag + b.Imag,
-            };
-        }
-
-        float Abs2(Complex a)
-        {
-            return a.Real * a.Real + a.Imag * a.Imag;
-        }
+        int[,] _mandelbrot;
 
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
         {
-            var XSIZE = (int)pixels.Value;
-            var YSIZE = (int)pixels.Value;
-            var MAX_ITERATIONS = (int)iterations.Value;
             var limits = new Limits
             {
                 Min = new Complex { Real = (float)realMin.Value, Imag = (float)imagMin.Value },
                 Max = new Complex { Real = (float)realMax.Value, Imag = (float)imagMax.Value },
             };
-            var z_0 = new Complex { Real = 0, Imag = 0 };
-
-            var array = new int[XSIZE, YSIZE];
-            for (var x = 0; x < XSIZE; x++)
-            {
-                for (var y = 0; y < YSIZE; y++)
-                {
-                    var c = Map(x, XSIZE, y, YSIZE, limits);
-                    var z_i = z_0;
-                    for (var i = 0; i < MAX_ITERATIONS; i++)
-                    {
-                        var abs2 = Abs2(z_i);
-                        if (abs2 > (squareRadioButton.Checked ? 4 : 9))
-                        {
-                            array[x, y] = i;
-                            break;
-                        }
-                        z_i = Add(squareRadioButton.Checked ? Square(z_i) : Cube(z_i), c);
-                    }
-                }
-                backgroundWorker1.ReportProgress((int)((x + 1) * 50.0 / XSIZE));
-            }
-
-            var equalized = EqualizedHistogram.Equalize(array);
-            Bitmap bitmap = new Bitmap(XSIZE, YSIZE);
-            for (var x = 0; x < XSIZE; x++)
-            {
-                for (var y = 0; y < YSIZE; y++)
-                {
-                    var level = equalized[x, y];
-                    level = Math.Max(0, level);
-                    level = Math.Min(255, level);
-                    bitmap.SetPixel(x, y, Color.FromArgb(level, level, level));
-                }
-                backgroundWorker1.ReportProgress(50 + (int)((x + 1) * 50.0 / XSIZE));
-            }
-            pictureBox1.Image = bitmap;
+            _mandelbrot = Mandelbrot.Calculate((int)pixels.Value, (int)pixels.Value, (int)iterations.Value, limits, a => squareRadioButton.Checked ? Mandelbrot.Square(a) : Mandelbrot.Cube(a), squareRadioButton.Checked ? 4 : 9, progress => backgroundWorker1.ReportProgress(progress));
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -136,6 +46,64 @@ namespace Mandelbrot
             {
                 pictureBox1.Image.Save(saveFileDialog1.FileName);
             }
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            progressBar1.Value = 0;
+            backgroundWorker2.RunWorkerAsync();
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            colorDialog1.Color = color0.BackColor;
+            if (colorDialog1.ShowDialog() == DialogResult.OK)
+            {
+                color0.BackColor = colorDialog1.Color;
+            }
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            colorDialog1.Color = color255.BackColor;
+            if (colorDialog1.ShowDialog() == DialogResult.OK)
+            {
+                color255.BackColor = colorDialog1.Color;
+            }
+        }
+
+        private void backgroundWorker2_DoWork(object sender, DoWorkEventArgs e)
+        {
+            if (_mandelbrot == null) return;
+            var equalized = EqualizedHistogram.Equalize(_mandelbrot);
+            Bitmap bitmap = new Bitmap(_mandelbrot.GetLength(0), _mandelbrot.GetLength(1));
+            for (var x = 0; x < _mandelbrot.GetLength(0); x++)
+            {
+                for (var y = 0; y < _mandelbrot.GetLength(1); y++)
+                {
+                    if (_mandelbrot[x, y] == 0)
+                    {
+                        bitmap.SetPixel(x, y, Color.Black);
+                    }
+                    else
+                    {
+                        var level = equalized[x, y];
+                        level = Math.Max(0, level);
+                        level = Math.Min(255, level);
+                        var r = (int)(color0.BackColor.R + (color255.BackColor.R - color0.BackColor.R) * level / 255.0);
+                        var g = (int)(color0.BackColor.G + (color255.BackColor.G - color0.BackColor.G) * level / 255.0);
+                        var b = (int)(color0.BackColor.B + (color255.BackColor.B - color0.BackColor.B) * level / 255.0);
+                        bitmap.SetPixel(x, y, Color.FromArgb(r, g, b));
+                    }
+                }
+                backgroundWorker2.ReportProgress(((int)((x + 1) * 100.0 / _mandelbrot.GetLength(0))));
+            }
+            pictureBox1.Image = bitmap;
+        }
+
+        private void backgroundWorker2_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            progressBar1.Value = e.ProgressPercentage;
         }
     }
 }

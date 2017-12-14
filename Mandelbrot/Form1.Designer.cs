@@ -31,6 +31,12 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.color255 = new System.Windows.Forms.Button();
+            this.color0 = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.cubeRadioButton = new System.Windows.Forms.RadioButton();
+            this.squareRadioButton = new System.Windows.Forms.RadioButton();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.label4 = new System.Windows.Forms.Label();
             this.iterations = new System.Windows.Forms.NumericUpDown();
@@ -43,10 +49,9 @@
             this.realMax = new System.Windows.Forms.NumericUpDown();
             this.realMin = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
-            this.squareRadioButton = new System.Windows.Forms.RadioButton();
-            this.cubeRadioButton = new System.Windows.Forms.RadioButton();
-            this.button2 = new System.Windows.Forms.Button();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.colorDialog1 = new System.Windows.Forms.ColorDialog();
+            this.backgroundWorker2 = new System.ComponentModel.BackgroundWorker();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -65,7 +70,7 @@
             this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pictureBox1.Location = new System.Drawing.Point(0, 0);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(342, 338);
+            this.pictureBox1.Size = new System.Drawing.Size(342, 497);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
@@ -84,6 +89,9 @@
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.color255);
+            this.splitContainer1.Panel1.Controls.Add(this.color0);
+            this.splitContainer1.Panel1.Controls.Add(this.button3);
             this.splitContainer1.Panel1.Controls.Add(this.button2);
             this.splitContainer1.Panel1.Controls.Add(this.cubeRadioButton);
             this.splitContainer1.Panel1.Controls.Add(this.squareRadioButton);
@@ -103,9 +111,72 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.pictureBox1);
-            this.splitContainer1.Size = new System.Drawing.Size(526, 338);
+            this.splitContainer1.Size = new System.Drawing.Size(526, 497);
             this.splitContainer1.SplitterDistance = 180;
             this.splitContainer1.TabIndex = 1;
+            // 
+            // color255
+            // 
+            this.color255.BackColor = System.Drawing.Color.White;
+            this.color255.Location = new System.Drawing.Point(96, 280);
+            this.color255.Name = "color255";
+            this.color255.Size = new System.Drawing.Size(75, 48);
+            this.color255.TabIndex = 18;
+            this.color255.UseVisualStyleBackColor = false;
+            this.color255.Click += new System.EventHandler(this.button5_Click);
+            // 
+            // color0
+            // 
+            this.color0.BackColor = System.Drawing.Color.Black;
+            this.color0.Location = new System.Drawing.Point(12, 280);
+            this.color0.Name = "color0";
+            this.color0.Size = new System.Drawing.Size(75, 48);
+            this.color0.TabIndex = 17;
+            this.color0.UseVisualStyleBackColor = false;
+            this.color0.Click += new System.EventHandler(this.button4_Click);
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(12, 334);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(158, 44);
+            this.button3.TabIndex = 16;
+            this.button3.Text = "Equalize";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(13, 441);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(159, 44);
+            this.button2.TabIndex = 15;
+            this.button2.Text = "Save";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // cubeRadioButton
+            // 
+            this.cubeRadioButton.AutoSize = true;
+            this.cubeRadioButton.Checked = true;
+            this.cubeRadioButton.Location = new System.Drawing.Point(111, 174);
+            this.cubeRadioButton.Name = "cubeRadioButton";
+            this.cubeRadioButton.Size = new System.Drawing.Size(50, 17);
+            this.cubeRadioButton.TabIndex = 14;
+            this.cubeRadioButton.TabStop = true;
+            this.cubeRadioButton.Text = "Cube";
+            this.cubeRadioButton.UseVisualStyleBackColor = true;
+            // 
+            // squareRadioButton
+            // 
+            this.squareRadioButton.AutoSize = true;
+            this.squareRadioButton.Location = new System.Drawing.Point(18, 174);
+            this.squareRadioButton.Name = "squareRadioButton";
+            this.squareRadioButton.Size = new System.Drawing.Size(59, 17);
+            this.squareRadioButton.TabIndex = 13;
+            this.squareRadioButton.TabStop = true;
+            this.squareRadioButton.Text = "Square";
+            this.squareRadioButton.UseVisualStyleBackColor = true;
             // 
             // progressBar1
             // 
@@ -190,9 +261,9 @@
             // 
             this.button1.Location = new System.Drawing.Point(12, 230);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(159, 44);
+            this.button1.Size = new System.Drawing.Size(158, 44);
             this.button1.TabIndex = 7;
-            this.button1.Text = "Draw";
+            this.button1.Text = "Calculate";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
@@ -326,48 +397,21 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Real";
             // 
-            // squareRadioButton
-            // 
-            this.squareRadioButton.AutoSize = true;
-            this.squareRadioButton.Location = new System.Drawing.Point(18, 174);
-            this.squareRadioButton.Name = "squareRadioButton";
-            this.squareRadioButton.Size = new System.Drawing.Size(59, 17);
-            this.squareRadioButton.TabIndex = 13;
-            this.squareRadioButton.TabStop = true;
-            this.squareRadioButton.Text = "Square";
-            this.squareRadioButton.UseVisualStyleBackColor = true;
-            // 
-            // cubeRadioButton
-            // 
-            this.cubeRadioButton.AutoSize = true;
-            this.cubeRadioButton.Checked = true;
-            this.cubeRadioButton.Location = new System.Drawing.Point(111, 174);
-            this.cubeRadioButton.Name = "cubeRadioButton";
-            this.cubeRadioButton.Size = new System.Drawing.Size(50, 17);
-            this.cubeRadioButton.TabIndex = 14;
-            this.cubeRadioButton.TabStop = true;
-            this.cubeRadioButton.Text = "Cube";
-            this.cubeRadioButton.UseVisualStyleBackColor = true;
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(12, 280);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(159, 44);
-            this.button2.TabIndex = 15;
-            this.button2.Text = "Save";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
-            // 
             // saveFileDialog1
             // 
             this.saveFileDialog1.DefaultExt = "bmp";
+            // 
+            // backgroundWorker2
+            // 
+            this.backgroundWorker2.WorkerReportsProgress = true;
+            this.backgroundWorker2.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker2_DoWork);
+            this.backgroundWorker2.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker2_ProgressChanged);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(526, 338);
+            this.ClientSize = new System.Drawing.Size(526, 497);
             this.Controls.Add(this.splitContainer1);
             this.Name = "Form1";
             this.Text = "Mandelbrot";
@@ -408,6 +452,11 @@
         private System.Windows.Forms.RadioButton squareRadioButton;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button color255;
+        private System.Windows.Forms.Button color0;
+        private System.Windows.Forms.ColorDialog colorDialog1;
+        private System.ComponentModel.BackgroundWorker backgroundWorker2;
     }
 }
 
