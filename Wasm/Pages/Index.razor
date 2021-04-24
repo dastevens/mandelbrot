@@ -1,0 +1,76 @@
+﻿@using System.Diagnostics
+@using System.IO
+@using Mandelbrot.Core
+@using SixLabors.ImageSharp;
+@using SixLabors.ImageSharp.PixelFormats;
+@page "/"
+
+<h1>Mandelbrot image generator</h1>
+
+<label for="pixels">Width in pixels</label>
+<input name="pixels" type="number" @bind="xSize"/>
+
+<label for="iterations">Iterations</label>
+<input name="iterations" type="number" @bind="maxIterations"/>
+<br/>
+<label for="limitMin">Min</label>
+<input name="limitMinImag" type="number" @bind="limits.Min.Imag"/>
+<input name="limitMinReal" type="number" @bind="limits.Min.Real"/>
+<br/>
+<label for="limitMax">Max</label>
+<input name="limitMaxImag" type="number" @bind="limits.Max.Imag"/>
+<input name="limitMaxReal" type="number" @bind="limits.Max.Real"/>
+
+<br/>
+<button @onclick="Generate">Generate</button>
+<hr/>
+<img src=@image64/>
+<p>@timing</p>
+
+@code {
+
+    private int xSize = 1000;
+    private int maxIterations = 100;
+    private Limits limits = new Limits
+    {
+        Min = new Complex
+        {
+            Real = -2.0f,
+            Imag = -1.5f,
+        },
+        Max = new Complex
+        {
+            Real = 1.0f,
+            Imag = 1.5f,
+        }
+    };
+    private Func<Complex, Complex> iterator = Mandelbrot.Square;
+    private float abs2Limit = 4.0f;
+    private Color color0 = Color.Black;
+    private Color color255 = Color.White;
+    private string image64Prefix = "data:image/png;base64, ";
+    private string image64 = "";
+    private string timing = "";
+
+    private void Generate()
+    {
+        var stopwatch = Stopwatch.StartNew();
+        var mandelbrot = Mandelbrot.Calculate(
+            this.xSize,
+            this.maxIterations,
+            this.limits,
+            this.iterator,
+            this.abs2Limit,
+            reportProgress: (progress) => {}
+        );
+        var image = ImageHelper.CreateImage(
+            mandelbrot,
+            this.color0,
+            this.color255
+        );
+        using var ms = new MemoryStream();
+        image.SaveAsPng(ms);
+        this.image64 = image64Prefix + Convert.ToBase64String(ms.GetBuffer());
+        this.timing = $"{stopwatch.ElapsedMilliseconds} ms";
+    }
+}

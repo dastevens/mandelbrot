@@ -1,0 +1,41 @@
+Migrate to MS Blazor
+
+1. Do MS Blazor tutorials:
+  https://dotnet.microsoft.com/learn/aspnet/blazor-tutorial/intro
+  https://docs.microsoft.com/en-us/aspnet/core/tutorials/build-a-blazor-app?view=aspnetcore-5.0
+
+2. Browse through the Blazor documentation
+  https://docs.microsoft.com/en-us/aspnet/core/blazor/?view=aspnetcore-5.0
+
+3. Make a skeleton Blazor app for mandelbrot
+  Refactor existing code into Core project
+  Make a new Blazor app, and strip out unnecessary components
+  Create form for configuring image generation
+  Render a static image using base64 encoding:
+    <img src=@image64/>
+    private string image64 = "data:image/png;base64, Qk3KnAAAAAAAAIoAA...";
+  Extract code that was tightly bound to the UI in Form1.cs
+  Migrate to ImageSharp (System.Drawing not supported as depends on gdi)
+
+4. Connect it all up and do some timings
+
+  xSize: 1000
+  maxIterations: 100
+
+  Console version (save to disk)
+  1415 ms
+  1411 ms
+  1438 ms
+  1408 ms
+
+  Blazor server version
+  1429 ms
+  1269 ms
+  1270 ms
+  1271 ms
+
+  Blazor wasm version
+  26052 ms
+  25574 ms
+  25715 ms
+  25595 ms
